@@ -39,7 +39,9 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
+
 	CDialogEx::DoDataExchange(pDX);
+
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
@@ -52,19 +54,32 @@ END_MESSAGE_MAP()
 
 CAdditionMFCDlg::CAdditionMFCDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_ADDITION_MFC_DIALOG, pParent)
+	, m_editSummand(0)
+	, m_editAddend(0)
+	, m_editSum(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CAdditionMFCDlg::DoDataExchange(CDataExchange* pDX)
 {
+
+	//处理MFC默认的数据交换
 	CDialogEx::DoDataExchange(pDX);
+
+	//处理控件之间数据交换
+	DDX_Text(pDX, IDC_SUMMAND_EDIT, CAdditionMFCDlg::m_editSummand);
+
+	DDX_Text(pDX, IDC_ADDEND_EDIT, CAdditionMFCDlg::m_editAddend);
+
+	DDX_Text(pDX, IDC_SUM_EDIT, CAdditionMFCDlg::m_editSum);
 }
 
 BEGIN_MESSAGE_MAP(CAdditionMFCDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_ADD_BUTTON, &CAdditionMFCDlg::OnClickedAddButton)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +168,19 @@ HCURSOR CAdditionMFCDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CAdditionMFCDlg::OnClickedAddButton()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	// 将各控件中的数据保存到相应的变量   
+	UpdateData(TRUE);
+
+	// 将被加数和加数的加和赋值给m_editSum   
+	m_editSum = m_editSummand + m_editAddend;
+
+	// 根据各变量的值更新相应的控件。和的编辑框会显示m_editSum的值   
+	UpdateData(FALSE);
+
+}

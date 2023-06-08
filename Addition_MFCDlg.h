@@ -31,4 +31,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	double m_editSummand;
+	double m_editAddend;
+	double m_editSum;
+	afx_msg void OnClickedAddButton();
 };
